@@ -37,8 +37,8 @@ Welcome to **Creative Coding JS**! This repository is dedicated to exploring gen
 ### 🎨 Gallery  
 Here are some artworks generated using this repo:  
 
-![Example 1](./2025.03.22-22.00.49.png)  
-![Example 2](./2025.03.25-22.13.01.png)  
+![Example 1](./assets/2025.03.22-22.00.49.png)  
+![Example 2](./assets/2025.03.25-22.13.01.png)  
 
 ---
 
