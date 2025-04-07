@@ -8,7 +8,7 @@ const settings = {
 
 const sketch = ({ context, width, height }) => {
   const draws = [];
-  for (let i = 0; i < 40; i++) {
+  for (let i = 0; i < 12; i++) {
     const x = random.range(0, width);
     const y = random.range(0, height);
     draws.push(new Agent(x, y));
@@ -17,6 +17,17 @@ const sketch = ({ context, width, height }) => {
   return ({ context, width, height }) => {
     context.fillStyle = 'white';
     context.fillRect(0, 0, width, height);
+    for (let i = 0; i < draws.length; i++) {
+      const draw = draws[i];
+
+      for (let j = i + 1; j < draws.length; j++) {
+        const other = draws[j];
+        context.moveTo(draw.pos.x, draw.pos.y);
+        context.lineTo(other.pos.x, other.pos.y);
+        context.stroke();
+      }
+    }
+
     draws.forEach(agent => {
       agent.update();
       agent.draw(context);
