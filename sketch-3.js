@@ -33,7 +33,8 @@ const sketch = ({ context, width, height }) => {
       }
     }
     draws.forEach(agent => {
-      agent.update();
+      agent.wrap(width, height);
+      // agent.bounce(width, heigh);
       agent.draw(context);
     });
 
@@ -60,12 +61,20 @@ class Agent {
     this.vel = new Vector(random.range(-1, 1), random.range(-1, 1));
     this.radius = random.range(5, 10);
   }
-  update() {
-    this.pos.x += this.pos.x >= 1044 || this.pos.x <= 4 ? this.vel.x *= -1 : this.vel.x;
-    this.pos.y += this.pos.y >= 1044 || this.pos.y <= 4 ? this.vel.y *= -1 : this.vel.y;
+  bounce(width, height) {
+    this.pos.x += this.pos.x >= width || this.pos.x <= 4 ? this.vel.x *= -1 : this.vel.x;
+    this.pos.y += this.pos.y >= height || this.pos.y <= 4 ? this.vel.y *= -1 : this.vel.y;
+  }
+  wrap(width, height) {
+    if (this.pos.x > width) this.pos.x = 0;
+    if (this.pos.x < 0) this.pos.x = width;
+    if (this.pos.y > height) this.pos.y = 0;
+    if (this.pos.y < 0) this.pos.y = height;
+    this.pos.x += this.vel.x;
+    this.pos.y += this.vel.y;
   }
   draw(context) {
-    context.lineWidth = 4;
+    context.lineWidth = random.range(2, 4);
     context.save();
     context.translate(this.pos.x, this.pos.y);
     context.beginPath();

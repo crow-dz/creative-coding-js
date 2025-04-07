@@ -1,7 +1,10 @@
 const canvasSketch = require('canvas-sketch');
 const random = require('canvas-sketch-util/random');
 const settings = {
-  dimensions: [1080, 1080]
+  dimensions: [1080, 1080],
+  animate: true,
+
+
 };
 
 
@@ -29,23 +32,18 @@ const sketch = () => {
       context.translate(x, y);
       // rotate all canvas
       context.rotate(angel);
-      context.scale(random.range(0.5, 1)
-        , random.range(0.8, 0.9))
+      context.scale(random.range(0.5, 1), random.range(0.8, 0.9))
       context.translate(0, -radius);
       context.beginPath();
       context.rect(w * 0.5, h * 0.5, w, h);
       context.fill();
       context.restore();
-
-
       context.save();
       // making 0,0 in center of canvas
       context.translate(x, y);
       // rotate all canvas
       context.rotate(angel);
       context.strokeStyle = '#EBC222';
-
-
       context.lineWidth = random.range(5, 15);
       context.beginPath();
       context.arc(0, 0, radius * random.range(.4, .8), radius * random.range(2, 5), slice * random.range(1, 5));
