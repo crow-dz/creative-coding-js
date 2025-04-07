@@ -1,5 +1,7 @@
 const canvasSketch = require('canvas-sketch');
-const { random } = require('canvas-sketch-util');
+const random = require('canvas-sketch-util/random');
+const math = require('canvas-sketch-util/math');
+
 
 const settings = {
   dimensions: [1048, 1048],
@@ -8,11 +10,10 @@ const settings = {
 
 const sketch = ({ context, width, height }) => {
   const draws = [];
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 30; i++) {
     const x = random.range(0, width);
     const y = random.range(0, height);
     draws.push(new Agent(x, y));
-
   }
   return ({ context, width, height }) => {
     context.fillStyle = 'white';
@@ -22,12 +23,15 @@ const sketch = ({ context, width, height }) => {
 
       for (let j = i + 1; j < draws.length; j++) {
         const other = draws[j];
+        const dis = getDistance(draw.pos, other.pos);
+        if (dis > 200) continue;
+        context.lineWidth = math.mapRange(dis, 0, 200, 12, 1);
+        context.beginPath();
         context.moveTo(draw.pos.x, draw.pos.y);
         context.lineTo(other.pos.x, other.pos.y);
         context.stroke();
       }
     }
-
     draws.forEach(agent => {
       agent.update();
       agent.draw(context);
@@ -35,12 +39,20 @@ const sketch = ({ context, width, height }) => {
 
   };
 };
+// Check distance using pythagorean theorem
+function getDistance(a, b) {
+  const dx = a.x - b.x;
+  const dy = a.y - b.y;
+  return Math.sqrt(dx * dx + dy * dy)
+
+}
 canvasSketch(sketch, settings);
 class Vector {
   constructor(x, y) {
     this.x = x;
     this.y = y;
   }
+
 }
 class Agent {
   constructor(x, y) {
